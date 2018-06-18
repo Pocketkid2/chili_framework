@@ -26,6 +26,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
+	gamepad = std::make_unique<DirectX::GamePad>();
 }
 
 void Game::Go()
@@ -38,8 +39,36 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	auto state = gamepad->GetState(0);
+
+	if (state.IsConnected())
+	{
+		float posx = state.thumbSticks.leftX;
+		float posy = state.thumbSticks.leftY * -1;
+		if (x >= 5 && x <= Graphics::ScreenWidth) {
+			x += posx;
+		}
+		if (y >= 5 && y <= Graphics::ScreenHeight) {
+			y += posy;
+		}
+	}
 }
 
 void Game::ComposeFrame()
 {
+	gfx.PutPixel(int(x - 5), int(y), Colors::Yellow);
+	gfx.PutPixel(int(x - 4), int(y), Colors::Yellow);
+	gfx.PutPixel(int(x - 3), int(y), Colors::Yellow);
+
+	gfx.PutPixel(int(x + 5), int(y), Colors::Yellow);
+	gfx.PutPixel(int(x + 4), int(y), Colors::Yellow);
+	gfx.PutPixel(int(x + 3), int(y), Colors::Yellow);
+
+	gfx.PutPixel(int(x), int(y - 5), Colors::Yellow);
+	gfx.PutPixel(int(x), int(y - 4), Colors::Yellow);
+	gfx.PutPixel(int(x), int(y - 3), Colors::Yellow);
+
+	gfx.PutPixel(int(x), int(y + 5), Colors::Yellow);
+	gfx.PutPixel(int(x), int(y + 4), Colors::Yellow);
+	gfx.PutPixel(int(x), int(y + 3), Colors::Yellow);
 }

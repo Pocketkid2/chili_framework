@@ -23,6 +23,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "GamePad.h"
 
 class Game
 {
@@ -42,5 +43,8 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	std::unique_ptr<DirectX::GamePad> gamepad;
+	float x = 400;
+	float y = 300;
 	/********************************/
 };
