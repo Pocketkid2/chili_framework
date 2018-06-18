@@ -41,16 +41,40 @@ void Game::UpdateModel()
 {
 	auto state = gamepad->GetState(0);
 
+	float posx = 0.0;
+	float posy = 0.0;
+
 	if (state.IsConnected())
 	{
-		float posx = state.thumbSticks.leftX;
-		float posy = state.thumbSticks.leftY * -1;
-		if (x >= 5 && x <= Graphics::ScreenWidth) {
-			x += posx;
-		}
-		if (y >= 5 && y <= Graphics::ScreenHeight) {
-			y += posy;
-		}
+		posx = state.thumbSticks.leftX;
+		posy = state.thumbSticks.leftY * -1;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_UP)) {
+		posy = -1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
+		posy = 1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
+		posx = -1.0f;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
+		posx = 1.0f;
+	}
+
+	x += posx;
+	y += posy;
+	if (x < 5.0f) {
+		x = 5.0f;
+	}
+	if (x > float(Graphics::ScreenWidth - 6)) {
+		x = float(Graphics::ScreenWidth - 6);
+	}
+	if (y < 5.0f) {
+		y = 5.0f;
+	}
+	if (y > float(Graphics::ScreenHeight - 6)) {
+		y = float(Graphics::ScreenHeight - 6);
 	}
 }
 
