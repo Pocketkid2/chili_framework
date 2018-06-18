@@ -46,5 +46,7 @@ private:
 	std::unique_ptr<DirectX::GamePad> gamepad;
 	float x = 400;
 	float y = 300;
+	static constexpr int size = 20;
+	static constexpr float speed = 2.0f;
 	/********************************/
 };

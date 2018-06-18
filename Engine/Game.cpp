@@ -46,53 +46,39 @@ void Game::UpdateModel()
 
 	if (state.IsConnected())
 	{
-		posx = state.thumbSticks.leftX;
-		posy = state.thumbSticks.leftY * -1;
+		posx = state.thumbSticks.leftX * speed;
+		posy = state.thumbSticks.leftY * -speed;
 	}
 	if (wnd.kbd.KeyIsPressed(VK_UP)) {
-		posy = -1.0f;
+		posy = -speed;
 	}
 	if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
-		posy = 1.0f;
+		posy = speed;
 	}
 	if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
-		posx = -1.0f;
+		posx = -speed;
 	}
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
-		posx = 1.0f;
+		posx = speed;
 	}
 
 	x += posx;
 	y += posy;
-	if (x < 5.0f) {
-		x = 5.0f;
+	if (x < float(size)) {
+		x = float(size);
 	}
-	if (x > float(Graphics::ScreenWidth - 6)) {
-		x = float(Graphics::ScreenWidth - 6);
+	if (x > float(Graphics::ScreenWidth - (size + 1))) {
+		x = float(Graphics::ScreenWidth - (size + 1));
 	}
-	if (y < 5.0f) {
-		y = 5.0f;
+	if (y < float(size)) {
+		y = float(size);
 	}
-	if (y > float(Graphics::ScreenHeight - 6)) {
-		y = float(Graphics::ScreenHeight - 6);
+	if (y > float(Graphics::ScreenHeight - (size + 1))) {
+		y = float(Graphics::ScreenHeight - (size + 1));
 	}
 }
 
 void Game::ComposeFrame()
 {
-	gfx.PutPixel(int(x - 5), int(y), Colors::Yellow);
-	gfx.PutPixel(int(x - 4), int(y), Colors::Yellow);
-	gfx.PutPixel(int(x - 3), int(y), Colors::Yellow);
-
-	gfx.PutPixel(int(x + 5), int(y), Colors::Yellow);
-	gfx.PutPixel(int(x + 4), int(y), Colors::Yellow);
-	gfx.PutPixel(int(x + 3), int(y), Colors::Yellow);
-
-	gfx.PutPixel(int(x), int(y - 5), Colors::Yellow);
-	gfx.PutPixel(int(x), int(y - 4), Colors::Yellow);
-	gfx.PutPixel(int(x), int(y - 3), Colors::Yellow);
-
-	gfx.PutPixel(int(x), int(y + 5), Colors::Yellow);
-	gfx.PutPixel(int(x), int(y + 4), Colors::Yellow);
-	gfx.PutPixel(int(x), int(y + 3), Colors::Yellow);
+	gfx.DrawCircle(int(x), int(y), size, Colors::Yellow);
 }
